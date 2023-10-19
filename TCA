@@ -1,0 +1,164 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define N 2
+#define R 250
+#define NOT 4
+
+enum curso {
+    info,
+    mec,
+    mamb,
+    tads,
+    tga,
+    csoc
+};
+
+typedef struct TurmaT {
+    char nome;
+    // Outros campos da estrutura TurmaT podem ser adicionados aqui
+};
+
+// Variável global para armazenar turmas
+static struct TurmaT turmas[N];
+// Funções declaradas
+void menu_principal();
+void menu_turma();
+void incluirTurma();
+void listarTurma();
+void excluirTurma();
+void alterarTurma();
+int verificaDATA(int dd, int mm, int aa);
+
+int main() {
+    int opcao = -1;
+    while (opcao != 3) {
+        menu_principal();
+        scanf("%d", &opcao);
+        // Limpe o buffer de entrada
+        while (getchar() != '\n');
+        disparaMENUprincipal(opcao);
+    }
+
+    return 0;
+}
+
+void menu_principal() {
+    //system("cls");
+    printf("\n\n LIGA CORUJA DE FUTSAL\n");
+    printf("1 - TURMA\n");
+    printf("2 - TIME\n");
+    printf("3 - SAIR\n");
+}
+
+void menu_turma() {
+    //system("cls");
+    printf("\n\n MENU - TURMA\n");
+    printf("1 - INCLUIR\n");
+    printf("2 - ALTERAR\n");
+    printf("3 - EXCLUIR\n");
+    printf("4 - LISTAR\n");
+    printf("5 - VOLTAR \n\n");
+}
+
+void incluirTurma() {
+    // Implemente a lógica para adicionar uma nova turma
+    printf("Incluir turma:\n");
+
+    struct TurmaT novaTurma;
+    // Você pode capturar dados da nova turma aqui, por exemplo, o nome da turma
+    printf("Nome da turma: ");
+    scanf(" %c", &novaTurma.nome);
+
+    // Armazene a nova turma na lista de turmas
+    int i;
+    for (i = 0; i < N; i++) {
+        if (turmas[i].nome == '\0') {
+            turmas[i] = novaTurma;
+            printf("Turma adicionada com sucesso!\n");
+            break;
+        }
+    }
+    if (i == N) {
+        printf("Limite de turmas atingido. Não é possível adicionar mais turmas.\n");
+    }
+}
+
+void listarTurma() {
+    // Implemente a lógica para listar turmas
+    printf("Listar turmas:\n");
+
+    for (int i = 0; i < N; i++) {
+        if (turmas[i].nome != '\0') {
+            printf("Turma: %c\n", turmas[i].nome);
+        }
+    }
+}
+
+void excluirTurma() {
+    // Implemente a lógica para excluir uma turma
+    printf("Excluir turma:\n");
+
+    char nomeTurma;
+    printf("Informe o nome da turma a ser excluída: ");
+    scanf(" %c", &nomeTurma);
+
+    for (int i = 0; i < N; i++) {
+        if (turmas[i].nome == nomeTurma) {
+            turmas[i].nome = '\0';
+            printf("Turma excluída com sucesso!\n");
+            return;
+        }
+    }
+    printf("Turma não encontrada.\n");
+}
+
+void alterarTurma() {
+    // Implemente a lógica para alterar uma turma
+    printf("Alterar turma:\n");
+
+    char nomeTurma;
+    printf("Informe o nome da turma a ser alterada: ");
+    scanf(" %c", &nomeTurma);
+
+    for (int i = 0; i < N; i++) {
+        if (turmas[i].nome == nomeTurma) {
+            // Implemente as alterações necessárias na turma, se houver
+            printf("Turma encontrada e alterada com sucesso!\n");
+            return;
+        }
+    }
+    printf("Turma não encontrada.\n");
+}
+
+void disparaMENUprincipal(int opcao) {
+    if (opcao == 1) {
+        while (1) {
+            menu_turma();
+            int opcaoTurma;
+            scanf("%d", &opcaoTurma);
+            while (getchar() != '\n');
+
+            if (opcaoTurma == 1) {
+                incluirTurma();
+            } else if (opcaoTurma == 2) {
+                alterarTurma();
+            } else if (opcaoTurma == 3) {
+                excluirTurma();
+            } else if (opcaoTurma == 4) {
+                listarTurma();
+            } else if (opcaoTurma == 5) {
+                break; // Voltar para o menu principal
+            } else {
+                printf("Opção inválida. Tente novamente.\n");
+            }
+        }
+    } else if (opcao == 2) {
+        // Implemente a lógica para o menu "TIME" aqui, semelhante ao menu "TURMA"
+    } else if (opcao == 3) {
+        printf("Saindo...\n");
+    } else {
+        printf("Opção inválida. Tente novamente.\n");
+    }
+}
+
